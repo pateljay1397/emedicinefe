@@ -14,6 +14,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useDispatch } from "react-redux";
 import { setError, setUser, signin } from "../slices/authSlice";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props: any) {
   return (
@@ -36,8 +37,9 @@ function Copyright(props: any) {
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function SignIn() {
+const SignIn: React.FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -50,10 +52,11 @@ export default function SignIn() {
       password,
     };
     const response = await dispatch(signin(jsonData) as any);
-    if (response.success) {
-      dispatch(setUser(response.user));
+    if (response.payload.statusCode === 200) {
+      dispatch(setUser(response.payload.user));
       // Reset form fields
       dispatch(setError(null));
+      navigate("/");
     } else {
       dispatch(setError("Signup failed"));
     }
@@ -133,4 +136,6 @@ export default function SignIn() {
       </Container>
     </ThemeProvider>
   );
-}
+};
+
+export default SignIn;

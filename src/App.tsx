@@ -6,6 +6,7 @@ import SignIn from "./components/SignIn";
 import { Provider } from "react-redux";
 import store from "./store";
 import Home from "./components/Home";
+import UserList from "./components/UserList";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" Component={Home} />
           <Route path="/SignUp" Component={SignUp} caseSensitive />
           <Route path="/SignIn" Component={SignIn} caseSensitive />
+          <Route path="/UserList" Component={UserList} caseSensitive />
         </Routes>
       </Router>
     </Provider>
